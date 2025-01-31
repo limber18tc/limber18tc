@@ -1,27 +1,43 @@
 #include <iostream>
-#include <stdio.h>
+#include <stdlib.h> 
+#define MAX 20
+using namespace std;
 
-const char* obtenerCategoria(int numero) {
-    const char* categorias[] = {"Deficiente", "Regular", "Bueno", "Muy bueno", "Excelente"};
+void determinarCategoria(int valor, char categoria[]) {
+    char categorias[5][15] = {"Deficiente", "Regular", "Bueno", "Muy bueno", "Excelente"};
+    int indice = (valor > 18) ? 4 : (valor - 1) / 5;
 
-    if (numero < 1 || numero > 20) {
-        return "Valor fuera de rango";
+    int i = 0;
+    while (categorias[indice][i] != '\0') {
+        categoria[i] = categorias[indice][i];
+        i++;
     }
-
-    if (numero >= 16) {
-        return categorias[4];
-    } else {
-        return categorias[(numero - 1) / 5];
-    }
+    categoria[i] = '\0';
 }
 
 int main() {
-    int numero;
+    char opcion;
 
-    printf("Por favor, ingrese un número entre 1 y 20: ");
-    scanf("%d", &numero);
+    do {
+        system("clear");
 
-    printf("La categoría del número %d es: %s\n", numero, obtenerCategoria(numero));
-    
+        int valor;
+        char categoria[15];
+
+        cout << "Ingresa un valor entre 1 y 20: ";
+        cin >> valor;
+
+        if (valor < 1 || valor > MAX) {
+            cout << "El valor ingresado esta fuera del rango permitido." << endl;
+        } else {
+            determinarCategoria(valor, categoria);
+            cout << "Categoria: " << categoria << endl;
+        }
+
+        cout << "\nDeseas volver a ejecutar el programa? (s/n): ";
+        cin >> opcion;
+
+    } while (opcion == 's' || opcion == 'S'); 
+
     return 0;
 }
